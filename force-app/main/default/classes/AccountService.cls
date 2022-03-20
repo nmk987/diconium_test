@@ -18,7 +18,7 @@ public with sharing class AccountService {
 
     public static void updateChildContactsOwnerForZipCodeTerritory(List<Account> p_accounts){
         Map<Id, Account> accountsByIds = new Map<Id, Account>(p_accounts);
-        List<Contact> contacts = [SELECT Id, OwnerId, AccountId FROM Contact WHERE AccountId IN :accountsByIds.keySet()];
+        List<Contact> contacts = ContactModel.selectContactsByAccountIds(accountsByIds.keySet());
 
         Map<Id, List<Contact>> contactsByAccountId = new Map<Id, List<Contact>>();
         for(Contact contact : contacts){
@@ -43,7 +43,7 @@ public with sharing class AccountService {
 
     public static void updateChildOpportunityOwnerForZipCodeTerritory(List<Account> p_accounts){
         Map<Id, Account> accountsByIds = new Map<Id, Account>(p_accounts);
-        List<Opportunity> opportunities = [SELECT Id, OwnerId, AccountId FROM Opportunity WHERE AccountId IN :accountsByIds.keySet()];
+        List<Opportunity> opportunities = OpportunityModel.selectOpportunitiesByAccountIds(accountsByIds.keySet());
 
         Map<Id, List<Opportunity>> opportunitiesByAccountId = new Map<Id, List<Opportunity>>();
         for(Opportunity opportunity : opportunities){

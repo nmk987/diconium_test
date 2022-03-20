@@ -51,7 +51,7 @@ public with sharing class TerritoryTriggerHandler implements ITrigger{
         }
 
         if( ! territoryIds.isEmpty()){
-            List<Account> accounts = [SELECT Id, OwnerId, BillingPostalCode, Territory__c FROM Account WHERE Territory__c IN :territoryIds];
+            List<Account> accounts = AccountModel.selectAccountsByTerritoryIds(territoryIds);
             update AccountService.assignTerritoryAndOwner(accounts, TerritoryService.getRandomRepForTerritory(newRecords));
             AccountService.updateChildContactsOwnerForZipCodeTerritory(accounts);
             AccountService.updateChildOpportunityOwnerForZipCodeTerritory(accounts);
